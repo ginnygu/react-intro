@@ -1,0 +1,11 @@
+.toggle-me-div {
+  height: 150px;
+}
+
+.toggle-me-original {
+  background-color: aqua;
+}
+
+.toggle-me-not-original {
+  background-color: red;
+}
