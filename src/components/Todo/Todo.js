@@ -40,6 +40,7 @@ export class Todo extends Component {
       {
         id: uuidv4(),
         todo: this.state.todoInput,
+        isDone: false,
       },
     ];
 
@@ -72,6 +73,19 @@ export class Todo extends Component {
     });
   };
 
+  handleEditByID = (id, editInput) => {
+    let updatedTodoArray = this.state.todoList.map((item) => {
+      if (item.id === id) {
+        item.todo = editInput;
+      }
+      return item;
+    });
+
+    this.setState({
+      todoList: updatedTodoArray,
+    });
+  };
+
   render() {
     return (
       <div>
@@ -96,6 +110,7 @@ export class Todo extends Component {
                   item={item}
                   handleDeleteByID={this.handleDeleteByID}
                   handleDoneByID={this.handleDoneByID}
+                  handleEditByID={this.handleEditByID}
                 />
               );
             })}
