@@ -33,14 +33,15 @@ export class TodoList extends Component {
 
   onHandleEditSubmit = (id) => {
     this.onHandleEditClick();
-
     this.props.handleEditByID(id, this.state.editInput);
   };
 
   render() {
     const { todo, id, isDone } = this.props.item;
     const { handleDeleteByID, handleDoneByID } = this.props;
+
     const { canEdit, editInput } = this.state;
+
     return (
       <div className="todolist-div">
         {canEdit ? (

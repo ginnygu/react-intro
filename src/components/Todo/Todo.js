@@ -1,57 +1,75 @@
 import React, { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 import TodoList from "./TodoList";
 
 import "./Todo.css";
 export class Todo extends Component {
   state = {
-    todoList: [
-      {
-        id: uuidv4(),
-        todo: "walk the dog",
-        isDone: false,
-        dateAdded: Date.now(),
-      },
-      {
-        id: uuidv4(),
-        todo: "walk the cat",
-        isDone: false,
-        dateAdded: Date.now() + 1,
-      },
-      {
-        id: uuidv4(),
-        todo: "buy food",
-        isDone: false,
-        dateAdded: new Date().getTime() + 2,
-      },
-    ],
+    todoList: [],
     todoInput: "",
+    error: null,
+    errorMessage: "",
   };
+
+  async componentDidMount() {
+    try {
+      let allTodos = await axios.get(
+        "http://localhost:3001/api/todos/get-all-todos"
+      );
+
+      console.log(allTodos);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   handleTodoOnChange = (event) => {
     this.setState({
       todoInput: event.target.value,
+      error: null,
+      errorMessage: "",
     });
   };
 
   handleOnSubmit = (event) => {
     event.preventDefault();
 
-    let newArray = [
-      ...this.state.todoList,
-      {
-        id: uuidv4(),
-        todo: this.state.todoInput,
-        isDone: false,
-        dateAdded: new Date().getTime(),
-      },
-    ];
+    if (this.state.todoInput.length === 0) {
+      this.setState({
+        error: true,
+        errorMessage: "Cannot create empty todo",
+      });
+    } else {
+      let checkIfTodoAlreadyExists = this.state.todoList.findIndex(
+        (item) =>
+          item.todo.toLocaleLowerCase() ===
+          this.state.todoInput.toLocaleLowerCase()
+      );
 
-    this.setState({
-      todoList: newArray,
-      todoInput: "",
-    });
+      if (checkIfTodoAlreadyExists > -1) {
+        this.setState({
+          error: true,
+          errorMessage: "Todo already exists",
+        });
+      } else {
+        let newArray = [
+          ...this.state.todoList,
+          {
+            id: uuidv4(),
+            todo: this.state.todoInput,
+            isDone: false,
+            dateAdded: new Date().getTime(),
+          },
+        ];
+
+        this.setState({
+          todoList: newArray,
+          todoInput: "",
+        });
+      }
+    }
   };
 
   handleDeleteByID = (id) => {
@@ -128,6 +146,10 @@ export class Todo extends Component {
               value={this.state.todoInput}
             />
             <button type="submit">Submit</button>
+            <br />
+            <span style={{ color: "red" }}>
+              {this.state.error && this.state.errorMessage}
+            </span>
           </form>
         </div>
         <div className="sorting">
