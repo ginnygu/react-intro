@@ -23,7 +23,17 @@ export class TodoList extends Component {
         canEdit: !prevState.canEdit,
       };
     });
+
+    //let inputElement = document.getElementById(this.props.inputID);
+    //inputElement.focus();
   };
+
+  componentDidUpdate() {
+    let input = document.getElementById(this.props.inputID);
+    if (input) {
+      input.focus();
+    }
+  }
 
   handleEditOnChange = (event) => {
     this.setState({
@@ -33,13 +43,13 @@ export class TodoList extends Component {
 
   onHandleEditSubmit = (id) => {
     this.onHandleEditClick();
+
     this.props.handleEditByID(id, this.state.editInput);
   };
 
   render() {
-    const { todo, id, isDone } = this.props.item;
-    const { handleDeleteByID, handleDoneByID } = this.props;
-
+    const { todo, _id, isDone } = this.props.item;
+    const { handleDeleteByID, handleDoneByID, inputID } = this.props;
     const { canEdit, editInput } = this.state;
 
     return (
@@ -50,6 +60,7 @@ export class TodoList extends Component {
             value={editInput}
             onChange={this.handleEditOnChange}
             name="editInput"
+            id={inputID}
           />
         ) : (
           <li className={`li-style ${isDone ? "li-style-isDone" : ""}`}>
@@ -58,7 +69,7 @@ export class TodoList extends Component {
         )}
 
         {canEdit ? (
-          <button onClick={() => this.onHandleEditSubmit(id)} id="edit-button">
+          <button onClick={() => this.onHandleEditSubmit(_id)} id="edit-button">
             Submit
           </button>
         ) : (
@@ -67,10 +78,10 @@ export class TodoList extends Component {
           </button>
         )}
 
-        <button id="done-button" onClick={() => handleDoneByID(id)}>
+        <button id="done-button" onClick={() => handleDoneByID(_id, isDone)}>
           Done
         </button>
-        <button onClick={() => handleDeleteByID(id)} id="delete-button">
+        <button onClick={() => handleDeleteByID(_id)} id="delete-button">
           Delete
         </button>
       </div>
