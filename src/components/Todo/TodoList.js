@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+
+import Button from "../common/Button";
+
 import "./TodoList.css";
 
 export class TodoList extends Component {
@@ -69,21 +72,44 @@ export class TodoList extends Component {
         )}
 
         {canEdit ? (
-          <button onClick={() => this.onHandleEditSubmit(_id)} id="edit-button">
-            Submit
-          </button>
+          // <button onClick={() => this.onHandleEditSubmit(_id)} id="edit-button">
+          //   Submit
+          // </button>
+          <Button
+            buttonName="Submit"
+            cssid="edit-button"
+            clickFunc={() => this.onHandleEditSubmit(_id)}
+          />
         ) : (
-          <button onClick={this.onHandleEditClick} id="edit-button">
-            Edit
-          </button>
+          // <button onClick={this.onHandleEditClick} id="edit-button">
+          //   Edit
+          // </button>
+          <Button
+            buttonName="Edit"
+            cssid="edit-button"
+            clickFunc={() => this.onHandleEditClick()}
+          />
         )}
 
-        <button id="done-button" onClick={() => handleDoneByID(_id, isDone)}>
+        {/* <button id="done-button" onClick={() => handleDoneByID(_id, isDone)}>
           Done
-        </button>
-        <button onClick={() => handleDeleteByID(_id)} id="delete-button">
+        </button> */}
+
+        <Button
+          buttonName="Done"
+          cssid="done-button"
+          clickFunc={() => handleDoneByID(_id, isDone)}
+        />
+
+        {/* <button onClick={() => handleDeleteByID(_id)} id="delete-button">
           Delete
-        </button>
+        </button> */}
+
+        <Button
+          buttonName="Delete"
+          cssid="delete-button"
+          clickFunc={() => handleDeleteByID(_id)}
+        />
       </div>
     );
   }

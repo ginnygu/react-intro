@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
+import Button from "../common/Button";
 import TodoList from "./TodoList";
 
 import "./Todo.css";
-
+// console.log(process.env.NODE_ENV);
 //const URL = process.env.NODE_ENV === "product" ? "DEPLOYED ADDRESS" : "http://localhost:3001"
 const URL = "http://localhost:3001";
 export class Todo extends Component {
@@ -223,24 +224,40 @@ export class Todo extends Component {
         <div className="sorting">
           <ul>
             <li>
-              <button onClick={() => this.sortByDate("desc")}>
+              {/* <button onClick={() => this.sortByDate("desc")}>
                 Sort by Date - Newest to oldest
-              </button>
+              </button> */}
+              <Button
+                buttonName="Sort by Date - Newest to oldest"
+                clickFunc={() => this.sortByDate("desc")}
+              />
             </li>
             <li>
-              <button onClick={() => this.sortByDate("asc")}>
+              {/* <button onClick={() => this.sortByDate("asc")}>
                 Sort by Date - Oldest to newest
-              </button>
+              </button> */}
+              <Button
+                buttonName="Sort by Date - Oldest to newest"
+                clickFunc={() => this.sortByDate("asc")}
+              />
             </li>
             <li>
-              <button onClick={() => this.sortByDone("true")}>
+              {/* <button onClick={() => this.sortByDone("true")}>
                 Sort by Done
-              </button>
+              </button> */}
+              <Button
+                buttonName=" Sort by Done"
+                clickFunc={() => this.sortByDone("true")}
+              />
             </li>
             <li>
-              <button onClick={() => this.sortByDone("false")}>
+              {/* <button onClick={() => this.sortByDone("false")}>
                 Sort by Not Done
-              </button>
+              </button> */}
+              <Button
+                buttonName="Sort by Not Done"
+                clickFunc={() => this.sortByDone("false")}
+              />
             </li>
           </ul>
         </div>{" "}
